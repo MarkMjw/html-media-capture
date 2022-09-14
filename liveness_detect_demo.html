@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        #content{
+            position: absolute;
+            top: 50%;
+            left:50%;
+            margin: -150px 0 0 -150px;
+            width: 300px;
+            height: 300px;
+        }
+        .button {
+            width: 300px;
+            min-height: 20px;
+            background-color: #93F0AC;
+            border: none;
+            border-radius: 30px;
+            color: black;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            font-weight:bold;
+        }
+        button:focus {outline:0;}
+        pre {
+            margin: 20px 0 0 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript调用Java</title>
+</head>
+<body>
+<p>
+    <pre class="pre" id="show"></pre>
+</p>
+
+<div id="content">
+    <button class="button" onclick="startDetect();">Start Detect</button>
+</div>
+</body>
+
+<script>
+        function startDetect() {
+            document.getElementById("show").innerHTML = "click Start Detect"
+            // call native method
+            window.WebViewJavascriptBridge.callHandler(
+                'livenessDetect'
+                , {'biz_token':'1662704943,b5e8d9b5-b24c-4068-8963-72a6a8bc79fe'}
+                , function(responseData) {
+                    document.getElementById("show").innerHTML = "Response from native: " + responseData
+                }
+            );
+        }
+
+        function isIOS () {
+          return /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)
+        }
+
+        function setupWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+                return callback(window.WebViewJavascriptBridge)
+              } else if (isIOS()) {
+                if (window.WVJBCallbacks) {
+                  return window.WVJBCallbacks.push(callback)
+                }
+                window.WVJBCallbacks = [callback]
+                var WVJBIframe = document.createElement('iframe')
+                WVJBIframe.style.display = 'none'
+                WVJBIframe.src = 'https://__bridge_loaded__'
+                document.documentElement.appendChild(WVJBIframe)
+                setTimeout(() => {
+                  document.documentElement.removeChild(WVJBIframe)
+                }, 0)
+              } else {
+                document.addEventListener('WebViewJavascriptBridgeReady', function () {
+                  callback(window.WebViewJavascriptBridge)
+                }, false)
+              }
+        }
+
+</script>
+
+</html>
+
+
