@@ -64,9 +64,11 @@
         }
 
         function setupWebViewJavascriptBridge(callback) {
+        document.getElementById("show").innerHTML = "setupWebViewJavascriptBridge"
             if (window.WebViewJavascriptBridge) {
                 return callback(window.WebViewJavascriptBridge)
               } else if (isIOS()) {
+              document.getElementById("show").innerHTML = "WVJBCallbacks"
                 if (window.WVJBCallbacks) {
                   return window.WVJBCallbacks.push(callback)
                 }
@@ -76,6 +78,7 @@
                 WVJBIframe.src = 'https://__bridge_loaded__'
                 document.documentElement.appendChild(WVJBIframe)
                 setTimeout(() => {
+                document.getElementById("show").innerHTML = "removeChild"
                   document.documentElement.removeChild(WVJBIframe)
                 }, 0)
               } else {
