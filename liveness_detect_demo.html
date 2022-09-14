@@ -65,7 +65,7 @@
 
         function setupWebViewJavascriptBridge(callback) {
             if (window.WebViewJavascriptBridge) {
-                return callback(window.WebViewJavascriptBridge)
+                return callback(WebViewJavascriptBridge)
               } else if (isIOS()) {
                 if (window.WVJBCallbacks) {
                   return window.WVJBCallbacks.push(callback)
@@ -80,20 +80,10 @@
                 }, 0)
               } else {
                 document.addEventListener('WebViewJavascriptBridgeReady', function () {
-                  callback(window.WebViewJavascriptBridge)
+                  callback(WebViewJavascriptBridge)
                 }, false)
               }
         }
-    
-        setupWebViewJavascriptBridge(function(bridge) {
-            bridge.registerHandler("livenessDetectCallback", function(data, responseCallback) {
-                document.getElementById("show").innerHTML = ("Data from native: " + data);
-                if (responseCallback) {
-                    var responseData = "Javascript Says Right back aka!";
-                    responseCallback(responseData);
-                }
-            });
-        })
 
 </script>
 
