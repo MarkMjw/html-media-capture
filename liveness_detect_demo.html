@@ -48,7 +48,7 @@
 
 <script>
         function startDetect() {
-            document.getElementById("show").innerHTML = "click Start Detect"
+            document.getElementById("show").innerHTML = "click start detect"
             // call native method
             window.WebViewJavascriptBridge.callHandler(
                 'livenessDetect'
@@ -59,30 +59,37 @@
             );
         }
 
-        function isIOS () {
-          return /(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)
-        }
-
         function setupWebViewJavascriptBridge(callback) {
             if (window.WebViewJavascriptBridge) {
-                return callback(WebViewJavascriptBridge)
-              } else if (isIOS()) {
-                if (window.WVJBCallbacks) {
-                  return window.WVJBCallbacks.push(callback)
-                }
-                window.WVJBCallbacks = [callback]
-                var WVJBIframe = document.createElement('iframe')
-                WVJBIframe.style.display = 'none'
-                WVJBIframe.src = 'https://__bridge_loaded__'
-                document.documentElement.appendChild(WVJBIframe)
-                setTimeout(() => {
-                  document.documentElement.removeChild(WVJBIframe)
-                }, 0)
-              } else {
-                document.addEventListener('WebViewJavascriptBridgeReady', function () {
-                  callback(WebViewJavascriptBridge)
-                }, false)
-              }
+                document.getElementById("show").innerHTML = "callback(WebViewJavascriptBridge)"
+                return callback(WebViewJavascriptBridge);
+            }
+            if (window.WVJBCallbacks) {
+                document.getElementById("show").innerHTML = "push(callback)"
+                return window.WVJBCallbacks.push(callback);
+            }
+            window.WVJBCallbacks = [callback];
+            var WVJBIframe = document.createElement('iframe');
+            WVJBIframe.style.display = 'none';
+            if (navigator.userAgent.match(/Android/gi)) {
+                // WVJBIframe.src = 'wvjbscheme://__BRIDGE_LOADED__';
+                document.addEventListener(
+                    'WebViewJavascriptBridgeReady'
+                    , function() {
+                        document.getElementById("show").innerHTML = "addEventListener callback(WebViewJavascriptBridge)"
+                        callback(WebViewJavascriptBridge)
+                    },
+                    false
+                );
+            } else if (navigator.userAgent.match(/iPhone/gi)) {
+                document.getElementById("show").innerHTML = "WVJBIframe.src"
+                WVJBIframe.src = 'https://__bridge_loaded__';
+            }
+            document.documentElement.appendChild(WVJBIframe);
+            setTimeout(function () {
+                document.getElementById("show").innerHTML = "removeChild(WVJBIframe)"
+                document.documentElement.removeChild(WVJBIframe)
+            }, 0)
         }
 
 </script>
