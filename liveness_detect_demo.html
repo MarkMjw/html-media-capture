@@ -84,6 +84,16 @@
                 }, false)
               }
         }
+    
+        setupWebViewJavascriptBridge(function(bridge) {
+            bridge.registerHandler("livenessDetectCallback", function(data, responseCallback) {
+                document.getElementById("show").innerHTML = ("Data from native: " + data);
+                if (responseCallback) {
+                    var responseData = "Javascript Says Right back aka!";
+                    responseCallback(responseData);
+                }
+            });
+        })
 
 </script>
 
