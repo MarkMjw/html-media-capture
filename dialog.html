@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全透明背景带底部弹窗示例</title>
+    <style>
+        /* 隐藏滚动条，确保全屏体验 */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            /* 隐藏滚动条 */
+            height: 100%;
+            /* 使body和html填满整个窗口 */
+        }
+
+        /* 设置整个页面背景完全透明 */
+        body {
+            background-color: transparent;
+            /* 完全透明背景 */
+        }
+
+        /* 弹窗容器，确保内容垂直居中 */
+        .popup-container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            /* 底部对齐 */
+        }
+
+        /* 底部弹窗样式 */
+        .popup {
+            background-color: white;
+            /* 弹窗背景为白色，不透明 */
+            padding: 20px;
+            width: 80%;
+            /* 或根据需要调整宽度 */
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+            /* 添加阴影效果 */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 弹窗容器，用于垂直居中弹窗 -->
+    <div class="popup-container">
+        <div class="popup">
+            <h2>底部弹窗</h2>
+            <p>这里是弹窗的内容...</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
