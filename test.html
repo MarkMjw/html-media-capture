@@ -230,8 +230,8 @@
                 }
             }, {
                 capture: true,	// 是否拦截消息
-                once: true,		// 是否是单次订阅
-                scopes: 4			// 由于 OneEvent 目前是靠容器注入，所以目前只能用枚举的原始值指定 scope
+                once: false,		// 是否是单次订阅
+                scopes: 2			// 由于 OneEvent 目前是靠容器注入，所以目前只能用枚举的原始值指定 scope
             })
         }).catch(e => {
             alert('downloadGame 异常')
